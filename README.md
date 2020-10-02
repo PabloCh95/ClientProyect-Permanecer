@@ -1,2 +1,3 @@
 # ServerProyect-Permanecer
-App de capacitacion
+App En Desarrollo:
+Objetivo que sea facil enseñar y comunicar
