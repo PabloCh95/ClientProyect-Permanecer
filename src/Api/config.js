@@ -1,0 +1,1 @@
+export const basePath = "http://192.168.0.61:4000/api";

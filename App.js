@@ -4,6 +4,8 @@ import AuthProvider from './src/provider/AuthProvider';
 
 export default function App() {
   return (
-      <Navigation /> //aplicamos navigation
+    <AuthProvider>
+      <Navigation />
+    </AuthProvider>
   );
 }
