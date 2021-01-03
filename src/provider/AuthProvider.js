@@ -7,10 +7,7 @@ export const AuthContext = createContext();
 
 export default function AuthProvider(props) {
   const { children } = props;
-  const [user, setUser] = useState({
-    user: null, //cuando el usuario no esta logueado
-    isLoading: true,
-  });
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     checkUserLogin(setUser);
@@ -36,7 +33,6 @@ async function checkUserLogin(setUser) {
   } else {
     setUser({
       user: jwtDecode(accessToken),
-      isLoading: false,
     });
   }
 }
