@@ -4,27 +4,20 @@ import AsyncStorage from "@react-native-community/async-storage";
 import jwtDecode from "jwt-decode";
 
 
-export function getAccessTokenApi() {
-    const accessToken = AsyncStorage.getItem(ACCESS_TOKEN).then(response => { return response; });
-    console.log('accessToken en getAccessTokenApi: ', accessToken);
+export async function getAccessTokenApi() {
+    const accessToken = await AsyncStorage.getItem(ACCESS_TOKEN).then(response => { return response; });
     if (!accessToken || accessToken === "null") {
-        console.log(accessToken);
         return null;
     }
-
-    console.log("token", accessToken);
-
 
     return willExpireToken(accessToken) ? null : accessToken;
 }
 
-export function getRefreshTokenApi() {
-    const refreshToken = AsyncStorage.getItem(REFRESH_TOKEN).then(response => { return response; });
-    console.log("No se ", refreshToken);
+export async function getRefreshTokenApi() {
+    const refreshToken = await AsyncStorage.getItem(REFRESH_TOKEN).then(response => { return response; });
     if (!refreshToken || refreshToken === "null") {
         return null;
     }
-
     return willExpireToken(refreshoken) ? null : refreshToken;
 }
 
@@ -49,31 +42,28 @@ export function refreshAccessTokenApi(refreshToken) {
 
             return response.json();
         })
-        .then(result => {
+        .then(async result => {
             if (!result) {
                 //Esto va a ser para desloguear usuario, o sea limpiar el token
                 logout();
             } else {//con esto refrescamos el token desde el cliente
                 const { accessToken, refreshToken } = result;
-                console.log(result);
-                AsyncStorage.setItem(ACCESS_TOKEN, accessToken);
-                AsyncStorage.setItem(REFRESH_TOKEN, refreshToken);
+                await AsyncStorage.setItem(ACCESS_TOKEN, accessToken);
+                await AsyncStorage.setItem(REFRESH_TOKEN, refreshToken);
             }
         });
 }
 
-export function logout() {
+export async function logout() {
     //esto es para remover el token, eliminarlo 
-    AsyncStorage.removeItem(ACCESS_TOKEN);
-    AsyncStorage.removeItem(REFRESH_TOKEN);
+    await AsyncStorage.removeItem(ACCESS_TOKEN);
+    await AsyncStorage.removeItem(REFRESH_TOKEN);
     //esto significa, que si no hay token, no hay usuario logueado
 }
 
 export function willExpireToken(token) {
     const seconds = 60;
-    console.log("antes", token)
     const metaToken = jwtDecode(token);
-    console.log("despues")
     const { exp } = metaToken;
     // const expCaducado = exp + 10000000;
     const now = (Date.now() + seconds) / 1000;
