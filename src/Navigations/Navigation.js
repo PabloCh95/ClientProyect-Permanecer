@@ -1,6 +1,7 @@
 import React from "react";
 import { NavigationContainer, DarkTheme } from "@react-navigation/native"; //aca imporo un componente de navigation, para aplicar el navigation en los screens
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";// importo componentes de navigation para los botones 
+import { createDrawerNavigator } from "@react-navigation/drawer";
 //esto que se importa es una funcion , esto lo hacemos para tener los menutabs...
 import { Icon } from "react-native-elements"; //importamos los iconos de react-native-elements
 //pestañas
@@ -23,7 +24,7 @@ export default function Navigation() {
     return (
         //dentro de navigation cointainer aplico todos los tabs que quiera crear y que importe de las pestañas
         //cambie los colores de las navegaciones a un tema oscuro (pensar como hacer un navbar y que tenga la opcion de cambiar color)
-        <NavigationContainer theme={DarkTheme}>
+        <NavigationContainer>
             <Tab.Navigator
 
                 initialRouteName="cursos"

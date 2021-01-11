@@ -7,10 +7,14 @@ export const AuthContext = createContext();
 
 export default function AuthProvider(props) {
   const { children } = props;
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({
+    user: null,
+    isLoading: true,
+  });
 
   useEffect(() => {
     checkUserLogin(setUser);
+    console.log("useEffect de AuthProvider")
   }, []);
 
   return <AuthContext.Provider value={user}>{children}</AuthContext.Provider>
@@ -27,12 +31,17 @@ async function checkUserLogin(setUser) {
         user: null,
         isLoading: false,
       });
+
     } else {
       await refreshAccessTokenApi(refreshToken);
+
     }
   } else {
+    console.log("cargando usuarios");
     setUser({
       user: jwtDecode(accessToken),
+      isLoading: false,
     });
+
   }
 }

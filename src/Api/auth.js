@@ -18,7 +18,7 @@ export async function getRefreshTokenApi() {
     if (!refreshToken || refreshToken === "null") {
         return null;
     }
-    return willExpireToken(refreshoken) ? null : refreshToken;
+    return willExpireToken(refreshToken) ? null : refreshToken;
 }
 
 export function refreshAccessTokenApi(refreshToken) {
@@ -56,6 +56,7 @@ export function refreshAccessTokenApi(refreshToken) {
 
 export async function logout() {
     //esto es para remover el token, eliminarlo 
+    console.log("entro a logout");
     await AsyncStorage.removeItem(ACCESS_TOKEN);
     await AsyncStorage.removeItem(REFRESH_TOKEN);
     //esto significa, que si no hay token, no hay usuario logueado
